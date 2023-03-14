@@ -44,6 +44,19 @@ class BirdsController < ApplicationController
     end
   end
 
+  def destroy
+
+    bird = Bird.find_by(id: params[:id])
+    if bird
+      bird.destroy
+      # If the bird was deleted successfully we will give a 204 status code indicating server has successfully completed the request and there is no content to send in response.
+      head :no_content
+    else
+      render json: { error: "Bird not found" }, status: :not_found
+    end
+
+  end
+
   private
 
   def bird_params
